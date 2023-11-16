@@ -1,9 +1,11 @@
-﻿using InfoBovinosAPI.Models;
+﻿using InfoBovinosAPI.DTOs;
 
 namespace InfoBovinosAPI.Interfaces
 {
     public interface IRazaRepository
     {
-        ICollection<Raza> GetRazas();
+        ICollection<RazaDTO> GetRazas();
+        RazaDTO GetRaza(int id);
+        bool RazaExists(int id);
     }
 }
