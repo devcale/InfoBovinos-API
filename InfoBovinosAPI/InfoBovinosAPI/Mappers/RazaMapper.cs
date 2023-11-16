@@ -13,5 +13,13 @@ namespace InfoBovinosAPI.Mappers
                 Nombre = raza.Nombre,
             };
         }
+
+        public Raza DTOToRaza(RazaDTO dto)
+        {
+            return new Raza
+            {
+                Nombre = dto.Nombre,
+            };
+        }
     }
 }

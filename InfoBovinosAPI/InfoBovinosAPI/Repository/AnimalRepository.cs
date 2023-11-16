@@ -10,11 +10,10 @@ namespace InfoBovinosAPI.Repository
     public class AnimalRepository : IAnimalRepository
     {
         private readonly DataContext _context;
-        private readonly AnimalMapper _mapper;
-        public AnimalRepository(DataContext context, AnimalMapper mapper)
+        
+        public AnimalRepository(DataContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public bool AnimalExists(int id)
@@ -22,9 +21,10 @@ namespace InfoBovinosAPI.Repository
             return _context.Animales.Any(a => a.Id == id);
         }
 
-        public Animal CreateAnimal(Animal animal)
+        public bool CreateAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            _context.Add(animal);
+            return Save();
         }
 
         public void DeleteAnimal(int id)
@@ -32,16 +32,20 @@ namespace InfoBovinosAPI.Repository
             throw new NotImplementedException();
         }
 
-        public AnimalDTO GetAnimal(int id)
+        public Animal GetAnimal(int id)
         {
-            Animal animal = _context.Animales.Where(a => a.Id == id).FirstOrDefault();
-            return _mapper.AnimalToDTO(animal);
+            return _context.Animales.Where(a => a.Id == id).FirstOrDefault();
         }
 
-        public ICollection<AnimalDTO> GetAnimales()
+        public ICollection<Animal> GetAnimales()
         {
-            List<AnimalDTO> animals = _context.Animales.OrderBy(a => a.Id).Select(animal => _mapper.AnimalToDTO(animal)).ToList();          
-            return animals;
+            return _context.Animales.OrderBy(a => a.Id).ToList();          
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
 
         public Animal UpdateAnimal(Animal animal)

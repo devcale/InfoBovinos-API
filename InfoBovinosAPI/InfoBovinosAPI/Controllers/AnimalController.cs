@@ -1,6 +1,8 @@
 ﻿using InfoBovinosAPI.DTOs;
 using InfoBovinosAPI.Interfaces;
+using InfoBovinosAPI.Mappers;
 using InfoBovinosAPI.Models;
+using InfoBovinosAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoBovinosAPI.Controllers
@@ -10,17 +12,19 @@ namespace InfoBovinosAPI.Controllers
     public class AnimalController : Controller
     {
         private readonly IAnimalRepository _animalRepository;
+        private readonly AnimalMapper _mapper;
 
-        public AnimalController(IAnimalRepository animalRepository)
+        public AnimalController(IAnimalRepository animalRepository, AnimalMapper mapper)
         {
             _animalRepository = animalRepository;
+            _mapper = mapper;
         }
 
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<AnimalDTO>))]
         public IActionResult GetAnimales(int page = 1, int pageSize = 10) {
-            ICollection<AnimalDTO> animales = _animalRepository.GetAnimales();
+            ICollection<AnimalDTO> animales = _animalRepository.GetAnimales().Select(animal => _mapper.AnimalToDTO(animal)).ToList();
             int totalCount = animales.Count();
             int totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
             ICollection<AnimalDTO> animalsPerPage = animales
@@ -45,7 +49,7 @@ namespace InfoBovinosAPI.Controllers
                 return NotFound();
             }
 
-            AnimalDTO animal = _animalRepository.GetAnimal(animalId);
+            AnimalDTO animal = _mapper.AnimalToDTO(_animalRepository.GetAnimal(animalId));
 
             if (!ModelState.IsValid)
             {
@@ -54,6 +58,42 @@ namespace InfoBovinosAPI.Controllers
 
             return Ok(animal);
         }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateAnimal([FromBody] AnimalDTO animalCreate)
+        {
+            if (animalCreate == null)
+                return BadRequest(ModelState);
+
+            var animal = _animalRepository.GetAnimales()
+                .Where(a => a.Nombre.Trim().ToUpper() == animalCreate.Nombre.TrimEnd().ToUpper())
+                .FirstOrDefault();
+
+            if (animal != null)
+            {
+                ModelState.AddModelError("", "Ya existe un animal con ese nombre. El id es " + animal.Id);
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var animalDTO = _mapper.DTOToAnimal(animalCreate);
+
+            if (!_animalRepository.CreateAnimal(animalDTO))
+            {
+                ModelState.AddModelError("", "Algo ha salido mal al intentar crear el animal.");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Se ha creado el animal correctamente");
+
+        }
+
+
 
 
     }

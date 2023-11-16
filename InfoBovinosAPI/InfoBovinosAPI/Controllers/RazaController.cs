@@ -1,5 +1,6 @@
 ﻿using InfoBovinosAPI.DTOs;
 using InfoBovinosAPI.Interfaces;
+using InfoBovinosAPI.Mappers;
 using InfoBovinosAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,17 +11,19 @@ namespace InfoBovinosAPI.Controllers
     public class RazaController : Controller
     {
         private readonly IRazaRepository _razaRepository;
+        private readonly RazaMapper _mapper;
 
-        public RazaController(IRazaRepository razaRepository)
+        public RazaController(IRazaRepository razaRepository, RazaMapper mapper)
         {
             _razaRepository = razaRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Raza>))]
         public IActionResult GetRazas(int page = 1, int pageSize = 10)
         {
-            ICollection<RazaDTO> razas = _razaRepository.GetRazas();
+            ICollection<RazaDTO> razas = _razaRepository.GetRazas().Select(raza => _mapper.RazaToDTO(raza)).ToList();
             int totalCount = razas.Count();
             int totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
             ICollection<RazaDTO> razasPerPage = razas
@@ -46,7 +49,7 @@ namespace InfoBovinosAPI.Controllers
                 return NotFound();
             }
 
-            RazaDTO raza = _razaRepository.GetRaza(razaId);
+            RazaDTO raza = _mapper.RazaToDTO(_razaRepository.GetRaza(razaId));
 
             if (!ModelState.IsValid)
             {
@@ -54,6 +57,40 @@ namespace InfoBovinosAPI.Controllers
             }
 
             return Ok(raza);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateRaza([FromBody] RazaDTO razaCreate)
+        {
+            if(razaCreate == null)
+                return BadRequest(ModelState);
+            
+            var raza = _razaRepository.GetRazas()
+                .Where(r => r.Nombre.Trim().ToUpper() == razaCreate.Nombre.TrimEnd().ToUpper())
+                .FirstOrDefault();
+
+            if (raza != null)
+            {
+                ModelState.AddModelError("", "La raza ya existe. El id es " + raza.RazaId);
+                return StatusCode(422, ModelState);
+            }
+
+            if(!ModelState.IsValid) 
+            { 
+                return BadRequest(ModelState); 
+            }
+
+            var razaDTO = _mapper.DTOToRaza(razaCreate);
+
+            if (!_razaRepository.CreateRaza(razaDTO))
+            {
+                ModelState.AddModelError("", "Algo ha salido mal al intentar crear la raza.");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Se ha creado la raza correctamente");
+            
         }
     }
 }

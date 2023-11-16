@@ -9,27 +9,37 @@ namespace InfoBovinosAPI.Repository
     public class RazaRepository : IRazaRepository
     {
         private readonly DataContext _context;
-        private readonly RazaMapper _mapper;
-        public RazaRepository(DataContext context, RazaMapper mapper)
+        public RazaRepository(DataContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public RazaDTO GetRaza(int id)
+        public bool CreateRaza(Raza raza)
         {
-            Raza raza = _context.Razas.Where(r => r.RazaId == id).FirstOrDefault();
-            return _mapper.RazaToDTO(raza);
+            _context.Add(raza);
+            return Save();
         }
 
-        public ICollection<RazaDTO> GetRazas()
+        public Raza GetRaza(int id)
         {
-            return _context.Razas.OrderBy(r => r.RazaId).Select(raza => _mapper.RazaToDTO(raza)).ToList();
+            return _context.Razas.Where(r => r.RazaId == id).FirstOrDefault();
+            
+        }
+
+        public ICollection<Raza> GetRazas()
+        {
+            return _context.Razas.OrderBy(r => r.RazaId).ToList();
         }
 
         public bool RazaExists(int id)
         {
             return _context.Razas.Any(a => a.RazaId == id);
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }
