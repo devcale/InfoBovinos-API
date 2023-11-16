@@ -11,6 +11,7 @@ namespace InfoBovinosAPI.Models
         public decimal Precio { get; set; }
         public EstadoEnum Estado { get; set; }
         public string Comentarios { get; set; }
+        public int RazaId { get; set; }
         public Raza Raza { get; set; }
     }
 
