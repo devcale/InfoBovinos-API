@@ -475,3 +475,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Ignore SQLite database files
+*.sqlite
+*.sqlite3
+*.db
