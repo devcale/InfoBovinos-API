@@ -1,4 +1,5 @@
 using InfoBovinosAPI.Data;
+using InfoBovinosAPI.Helpers;
 using InfoBovinosAPI.Interfaces;
 using InfoBovinosAPI.Mappers;
 using InfoBovinosAPI.Repository;
@@ -13,6 +14,7 @@ builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.AddScoped<IRazaRepository, RazaRepository>();
 builder.Services.AddScoped<AnimalMapper>();
 builder.Services.AddScoped<RazaMapper>();
+builder.Services.AddScoped<RazaAssociationChecker>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

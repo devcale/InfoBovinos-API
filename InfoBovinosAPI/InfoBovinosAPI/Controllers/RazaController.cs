@@ -1,4 +1,5 @@
 ﻿using InfoBovinosAPI.DTOs;
+using InfoBovinosAPI.Helpers;
 using InfoBovinosAPI.Interfaces;
 using InfoBovinosAPI.Mappers;
 using InfoBovinosAPI.Models;
@@ -12,11 +13,13 @@ namespace InfoBovinosAPI.Controllers
     {
         private readonly IRazaRepository _razaRepository;
         private readonly RazaMapper _mapper;
+        private readonly RazaAssociationChecker _associationChecker;
 
-        public RazaController(IRazaRepository razaRepository, RazaMapper mapper)
+        public RazaController(IRazaRepository razaRepository, RazaMapper mapper, RazaAssociationChecker razaAssociationChecker)
         {
             _razaRepository = razaRepository;
             _mapper = mapper;
+            _associationChecker = razaAssociationChecker;
         }
 
         [HttpGet]
@@ -122,5 +125,35 @@ namespace InfoBovinosAPI.Controllers
             return NoContent();
                 
         }
+
+        [HttpDelete("{razaId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteRaza(int razaId)
+        {
+            if(!_razaRepository.RazaExists(razaId))
+                return NotFound();
+
+            var razaToDelete = _razaRepository.GetRaza(razaId);
+
+            if (_associationChecker.RazaHasAssociatedAnimals(razaToDelete))
+            {
+                ModelState.AddModelError("", "Esta raza esta asociada a uno o más animales. Borra o actualiza los animales correspondientes e intentalo de nuevo.");
+                return BadRequest(ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if(!_razaRepository.DeleteRaza(razaToDelete))
+            {
+                ModelState.AddModelError("", "Ha ocurrido un error al intentar eliminar la raza");
+            }
+
+            return NoContent();
+        }
+
+        
     }
 }

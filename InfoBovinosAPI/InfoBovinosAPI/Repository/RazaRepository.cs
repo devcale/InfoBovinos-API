@@ -48,6 +48,10 @@ namespace InfoBovinosAPI.Repository
             return saved > 0 ? true : false;
         }
 
-        
+        public bool DeleteRaza(Raza raza)
+        {
+            _context.Remove(raza);
+            return Save();
+        }
     }
 }

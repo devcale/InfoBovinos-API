@@ -5,11 +5,11 @@ namespace InfoBovinosAPI.Interfaces
 {
     public interface IAnimalRepository
     {
+        bool CreateAnimal(Animal animal);
         ICollection<Animal> GetAnimales();
         Animal GetAnimal(int id);
-        bool CreateAnimal(Animal animal);
         bool UpdateAnimal(Animal animal);
-        void DeleteAnimal(int id);
+        bool DeleteAnimal(Animal animal);
         bool AnimalExists(int id);
         bool Save();
 

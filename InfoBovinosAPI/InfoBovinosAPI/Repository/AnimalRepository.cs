@@ -16,22 +16,11 @@ namespace InfoBovinosAPI.Repository
             _context = context;
         }
 
-        public bool AnimalExists(int id)
-        {
-            return _context.Animales.Any(a => a.Id == id);
-        }
-
         public bool CreateAnimal(Animal animal)
         {
             _context.Add(animal);
             return Save();
         }
-
-        public void DeleteAnimal(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Animal GetAnimal(int id)
         {
             return _context.Animales.Where(a => a.Id == id).FirstOrDefault();
@@ -39,7 +28,24 @@ namespace InfoBovinosAPI.Repository
 
         public ICollection<Animal> GetAnimales()
         {
-            return _context.Animales.OrderBy(a => a.Id).ToList();          
+            return _context.Animales.OrderBy(a => a.Id).ToList();
+        }
+
+        public bool UpdateAnimal(Animal animal)
+        {
+            _context.Update(animal);
+            return Save();
+        }
+
+        public bool DeleteAnimal(Animal animal)
+        {
+            _context.Remove(animal);
+            return Save();
+        }
+
+        public bool AnimalExists(int id)
+        {
+            return _context.Animales.Any(a => a.Id == id);
         }
 
         public bool Save()
@@ -48,11 +54,7 @@ namespace InfoBovinosAPI.Repository
             return saved > 0 ? true : false;
         }
 
-        public bool UpdateAnimal(Animal animal)
-        {
-            _context.Update(animal);
-            return Save();
-        }
+        
 
 
     }

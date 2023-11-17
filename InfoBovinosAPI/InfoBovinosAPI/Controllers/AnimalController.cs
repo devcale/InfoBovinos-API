@@ -123,6 +123,28 @@ namespace InfoBovinosAPI.Controllers
 
         }
 
+        [HttpDelete("{animalId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteAnimal(int animalId)
+        {
+            if (!_animalRepository.AnimalExists(animalId))
+                return NotFound();
+
+            var animalToDelete = _animalRepository.GetAnimal(animalId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!_animalRepository.DeleteAnimal(animalToDelete))
+            {
+                ModelState.AddModelError("", "Ha ocurrido un error al intentar eliminar el animal");
+            }
+
+            return NoContent();
+        }
+
 
 
 
