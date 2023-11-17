@@ -139,6 +139,7 @@ Para crear una raza, realizar una petición con un *body* similar al siguiente:
 - Se debe crear una raza con un nombre distinto al de las razas ya existentes.
 
 *Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/68d5a4e5-84df-40c4-a1f8-ff8ef57846bc)
 
 
 
@@ -146,6 +147,7 @@ Para crear una raza, realizar una petición con un *body* similar al siguiente:
 Ruta: `GET /api/razas/{idRaza}`
 
 *Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/6701d048-019d-465e-96c0-e28be05c6c33)
 
 
 ### Obtener todas las Razas
@@ -154,18 +156,23 @@ Ruta: `GET /api/razas`
 Para esta petición se utiliza paginación del lado del servidor, por lo que será necesario especificar el número de la página requerida y la cantidad de entidades que se desea obtener por página.
 
 *Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/c0bc2dd3-da71-4983-8c8c-8a5e83bc3c02)
 
 ### Editar Raza
 Ruta: `PUT /api/razas/{idRaza}`
 
-Se debe tener en cuenta las mismas consideraciones que al momento de crear el animal.
+
+Se debe tener en cuenta las mismas consideraciones que al momento de crear la raza.
 
 *Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/60c374e0-040e-4590-977c-5aa2f5560dfc)
+
 
 ### Eliminar Raza
 Ruta: `DELETE /api/razas/{idRaza}`
 
 *Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/5f496911-8557-4b37-98c6-6a95988f3c63)
 
 
 
