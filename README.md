@@ -65,3 +65,107 @@ Luego de haber creado la migración inicial, ejecuta el siguiente comando para a
  2. Ejecuta el script SQL en tu herramienta de gestión de bases de datos SQLite o a través de la línea de comandos SQLite:
   `sqlite3 bovinosdb.db < script.sql`
 	 
+## Uso del API
+
+### Crear Animal
+Ruta: `POST /api/animales`
+Para crear un animal, realizar una petición con un *body* similar al siguiente:
+```json
+{
+  "nombre": "Via Lactea",
+  "fechaNacimiento": "2012-11-17T17:40:48.000Z",
+  "sexo": "Hembra",
+  "precio": 1500,
+  "estado": "Activo",
+  "comentarios": "Via Láctea, la vaca más estelar de la granja. Su leche es la favorita de las constelaciones y sus sueños son tan grandes como el universo.",
+  "razaId": 5
+}
+```
+***CONSIDERACIONES IMPORTANTES***: 
+- Asegurarse de que el Id de la raza apunte a una raza existente.
+- El precio del animal debe ser mayor a 0
+- El nombre de cada animal debe ser único
+
+*Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/a25d9ca8-24f2-4c78-b2a2-4a4cc7a1619b)
+
+### Obtener Animal por ID
+Ruta: `GET /api/animales/{idAnimal}`
+
+*Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/f48b730c-aa8a-4cab-ad05-1d054a801810)
+
+### Obtener todos los Animales
+Ruta: `GET /api/animales`
+
+Para esta petición se utiliza paginación del lado del servidor, por lo que será necesario especificar el número de la página requerida y la cantidad de entidades que se desea obtener por página.
+
+*Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/bfc4e9a4-a228-4966-b455-466fb705eeba)
+
+
+### Editar Animal
+Ruta: `PUT /api/animales/{idAnimal}`
+
+Se debe tener en cuenta las mismas consideraciones que al momento de crear el animal.
+
+*Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/941b88cb-638b-49e7-84e1-3bdac72e4043)
+
+
+### Eliminar Animal
+Ruta: `DELETE /api/animales/{idAnimal}`
+
+*Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/9a3b5e82-518b-4adb-8fce-f725a4ae7724)
+
+
+### Obtener número de Animales activos por Raza
+Ruta: `GET /api/conteo-animal/activos-por-raza`
+
+*Demo de la petición:*
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/5d89d295-9145-45a4-a647-a5ba4e795441)
+
+
+### Crear Raza
+Ruta: `POST /api/razas`
+Para crear una raza, realizar una petición con un *body* similar al siguiente:
+```json
+{
+  "nombre": "Estelar",
+}
+```
+***CONSIDERACIONES IMPORTANTES***: 
+- Se debe crear una raza con un nombre distinto al de las razas ya existentes.
+
+*Demo de la petición:*
+
+
+
+### Obtener Raza por ID
+Ruta: `GET /api/razas/{idRaza}`
+
+*Demo de la petición:*
+
+
+### Obtener todas las Razas
+Ruta: `GET /api/razas`
+
+Para esta petición se utiliza paginación del lado del servidor, por lo que será necesario especificar el número de la página requerida y la cantidad de entidades que se desea obtener por página.
+
+*Demo de la petición:*
+
+### Editar Raza
+Ruta: `PUT /api/razas/{idRaza}`
+
+Se debe tener en cuenta las mismas consideraciones que al momento de crear el animal.
+
+*Demo de la petición:*
+
+### Eliminar Raza
+Ruta: `DELETE /api/razas/{idRaza}`
+
+*Demo de la petición:*
+
+
+
