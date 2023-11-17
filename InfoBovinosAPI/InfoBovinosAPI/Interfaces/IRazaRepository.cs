@@ -9,6 +9,7 @@ namespace InfoBovinosAPI.Interfaces
         Raza GetRaza(int id);
         bool RazaExists(int id);
         bool CreateRaza(Raza raza);
+        bool UpdateRaza(Raza raza);
         bool Save();
     }
 }

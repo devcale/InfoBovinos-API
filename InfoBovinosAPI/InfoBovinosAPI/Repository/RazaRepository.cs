@@ -36,10 +36,18 @@ namespace InfoBovinosAPI.Repository
             return _context.Razas.Any(a => a.RazaId == id);
         }
 
+        public bool UpdateRaza(Raza raza)
+        {
+            _context.Update(raza);
+            return Save();
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
+
+        
     }
 }

@@ -18,6 +18,7 @@ namespace InfoBovinosAPI.Mappers
         {
             return new Raza
             {
+                RazaId = dto.RazaId,
                 Nombre = dto.Nombre,
             };
         }

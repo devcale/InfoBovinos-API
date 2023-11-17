@@ -93,6 +93,36 @@ namespace InfoBovinosAPI.Controllers
 
         }
 
+        [HttpPut("{animalId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateAnimal(int animalId, [FromBody] AnimalDTO updatedAnimal)
+        {
+            if (updatedAnimal == null)
+                return BadRequest(ModelState);
+
+            if (animalId != updatedAnimal.Id)
+                return BadRequest(ModelState);
+
+            if (!_animalRepository.AnimalExists(animalId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            Animal animal = _mapper.DTOToAnimal(updatedAnimal);
+
+            if (!_animalRepository.UpdateAnimal(animal))
+            {
+                ModelState.AddModelError("", "Algo ha salido mal al intentar actualizar la raza");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+
+        }
+
 
 
 

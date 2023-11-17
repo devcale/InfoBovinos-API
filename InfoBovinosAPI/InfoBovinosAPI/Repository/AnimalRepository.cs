@@ -48,11 +48,12 @@ namespace InfoBovinosAPI.Repository
             return saved > 0 ? true : false;
         }
 
-        public Animal UpdateAnimal(Animal animal)
+        public bool UpdateAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            _context.Update(animal);
+            return Save();
         }
 
-        
+
     }
 }

@@ -27,6 +27,7 @@ namespace InfoBovinosAPI.Mappers
             Enum.TryParse<EstadoEnum>(dto.Estado, out EstadoEnum estado);
             return new Animal
             {
+                Id = dto.Id,
                 Nombre = dto.Nombre,
                 FechaNacimiento = dto.FechaNacimiento,
                 Sexo = sexo,

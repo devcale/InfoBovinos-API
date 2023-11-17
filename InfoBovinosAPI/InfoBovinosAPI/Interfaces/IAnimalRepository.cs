@@ -8,7 +8,7 @@ namespace InfoBovinosAPI.Interfaces
         ICollection<Animal> GetAnimales();
         Animal GetAnimal(int id);
         bool CreateAnimal(Animal animal);
-        Animal UpdateAnimal(Animal animal);
+        bool UpdateAnimal(Animal animal);
         void DeleteAnimal(int id);
         bool AnimalExists(int id);
         bool Save();

@@ -92,5 +92,35 @@ namespace InfoBovinosAPI.Controllers
             return Ok("Se ha creado la raza correctamente");
             
         }
+
+        [HttpPut("{razaId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateRaza(int razaId, [FromBody] RazaDTO updatedRaza)
+        {
+            if(updatedRaza == null) 
+                return BadRequest(ModelState);
+
+            if(razaId != updatedRaza.RazaId)
+                return BadRequest(ModelState);
+
+            if(!_razaRepository.RazaExists(razaId))
+                return NotFound();
+
+            if(!ModelState.IsValid)
+                return BadRequest();
+
+            Raza raza = _mapper.DTOToRaza(updatedRaza);
+
+            if(!_razaRepository.UpdateRaza(raza))
+            {
+                ModelState.AddModelError("", "Algo ha salido mal al intentar actualizar la raza");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+                
+        }
     }
 }
