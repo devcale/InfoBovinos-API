@@ -1,5 +1,4 @@
-﻿using InfoBovinosAPI.DTOs;
-using InfoBovinosAPI.Models;
+﻿using InfoBovinosAPI.Models;
 
 namespace InfoBovinosAPI.Interfaces
 {

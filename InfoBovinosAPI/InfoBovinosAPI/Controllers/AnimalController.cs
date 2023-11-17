@@ -2,7 +2,6 @@
 using InfoBovinosAPI.Interfaces;
 using InfoBovinosAPI.Mappers;
 using InfoBovinosAPI.Models;
-using InfoBovinosAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoBovinosAPI.Controllers

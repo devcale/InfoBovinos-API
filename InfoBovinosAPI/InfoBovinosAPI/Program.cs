@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.AddScoped<IRazaRepository, RazaRepository>();
+builder.Services.AddScoped<IAnimalRazaRepository, AnimalRazaRepository>();
 builder.Services.AddScoped<AnimalMapper>();
 builder.Services.AddScoped<RazaMapper>();
 builder.Services.AddScoped<RazaAssociationChecker>();

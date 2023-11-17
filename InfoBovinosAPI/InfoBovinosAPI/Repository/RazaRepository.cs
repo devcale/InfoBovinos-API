@@ -1,7 +1,5 @@
 ﻿using InfoBovinosAPI.Data;
-using InfoBovinosAPI.DTOs;
 using InfoBovinosAPI.Interfaces;
-using InfoBovinosAPI.Mappers;
 using InfoBovinosAPI.Models;
 
 namespace InfoBovinosAPI.Repository
@@ -31,27 +29,27 @@ namespace InfoBovinosAPI.Repository
             return _context.Razas.OrderBy(r => r.RazaId).ToList();
         }
 
-        public bool RazaExists(int id)
-        {
-            return _context.Razas.Any(a => a.RazaId == id);
-        }
-
         public bool UpdateRaza(Raza raza)
         {
             _context.Update(raza);
             return Save();
         }
 
-        public bool Save()
-        {
-            var saved = _context.SaveChanges();
-            return saved > 0 ? true : false;
-        }
-
         public bool DeleteRaza(Raza raza)
         {
             _context.Remove(raza);
             return Save();
+        }
+
+        public bool RazaExists(int id)
+        {
+            return _context.Razas.Any(a => a.RazaId == id);
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }

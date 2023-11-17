@@ -1,8 +1,5 @@
 ﻿using InfoBovinosAPI.Data;
-using InfoBovinosAPI.DTOs;
-using InfoBovinosAPI.Enums;
 using InfoBovinosAPI.Interfaces;
-using InfoBovinosAPI.Mappers;
 using InfoBovinosAPI.Models;
 
 namespace InfoBovinosAPI.Repository
@@ -55,7 +52,5 @@ namespace InfoBovinosAPI.Repository
         }
 
         
-
-
     }
 }
