@@ -23,6 +23,32 @@ Este proyecto consiste en el desarrollo de una API REST que gestiona la informac
 -   **FluentValidation:** Se eligió FluentValidation para la validación de datos en la API debido a que proporciona una forma declarativa y altamente legible de definir reglas de validación para los modelos de datos, permitiendo una validación robusta y personalizable en la capa de presentación sin acoplarla al modelo subyacente.
 - **Swagger:** Implementación de Swagger para la documentación interactiva y la visualización de la API, facilitando su comprensión y uso por parte de los desarrolladores.
 
+## Principios *SOLID* en este proyecto
+
+Este proyecto sigue los principios SOLID para promover una arquitectura robusta y mantenible. A continuación, se muestra cómo se aplican estos principios:
+
+### Single Responsibility Principle (SRP)
+
+Cada clase y componente en este proyecto tiene una única responsabilidad. Las clases están diseñadas para hacer una cosa y hacerla bien, lo que facilita el mantenimiento y la comprensión del código. Esto se facilita mediante el uso del patrón repositorio, al abstraer la lógica del almacenamiento y recuperación de datos en una capa separada.
+
+### Open/Closed Principle (OCP)
+
+Las interfaces se utilizan para definir contratos entre componentes, lo que permite la extensión del sistema sin modificar el código existente. Las clases dependen de abstracciones (interfaces) en lugar de detalles de implementación concreta, cumpliendo así con el principio de OCP. Las interfaces, utilizadas con este proposito, se pueden encontrar en la carpeta `/interfaces`.
+
+### Liskov Substitution Principle (LSP)
+
+Las clases derivadas pueden sustituir a sus clases base sin cambiar su comportamiento esperado.
+
+### Interface Segregation Principle (ISP)
+
+Las interfaces están específicamente diseñadas para los clientes que las utilizan. Se evitan interfaces demasiado generales y se prefieren interfaces más pequeñas y cohesivas para reducir la dependencia de funcionalidades no utilizadas.
+
+### Dependency Inversion Principle (DIP)
+
+El código depende de abstracciones (las interfaces) en lugar de detalles de implementación concretos. La inyección de dependencias se emplea para permitir la fácil sustitución de implementaciones, promoviendo así la flexibilidad y la modularidad.
+
+*Estos principios guían el diseño de este proyecto, promoviendo un código limpio, modular y fácil de mantener.*
+
 ## Instrucciones de Instalación
 
 ### Requisitos Previos
