@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InfoBovinosAPI.Controllers
 {
-    [Route("api/animal")]
+    [Route("api/animales")]
     [ApiController]
     public class AnimalController : Controller
     {

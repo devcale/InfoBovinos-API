@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InfoBovinosAPI.Controllers
 {
-    [Route("api/raza")]
+    [Route("api/razas")]
     [ApiController]
     public class RazaController : Controller
     {
