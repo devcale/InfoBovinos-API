@@ -23,6 +23,17 @@ Este proyecto consiste en el desarrollo de una API REST que gestiona la informac
 -   **FluentValidation:** Se eligió FluentValidation para la validación de datos en la API debido a que proporciona una forma declarativa y altamente legible de definir reglas de validación para los modelos de datos, permitiendo una validación robusta y personalizable en la capa de presentación sin acoplarla al modelo subyacente.
 - **Swagger:** Implementación de Swagger para la documentación interactiva y la visualización de la API, facilitando su comprensión y uso por parte de los desarrolladores.
 
+## Pruebas Unitarias
+
+Se han implementado pruebas unitarias para validar el funcionamiento de ciertos métodos en el controlador de `Animal`. Estas pruebas se han realizado utilizando XUnit, FakeItEasy y FluentAssertions para garantizar la funcionalidad y la integridad del código.
+
+-   `AnimalController_GetAnimales_ReturnOk()`: Esta prueba verifica la correcta recuperación de los animales paginados. Se evalúa si el método `GetAnimales()` del controlador devuelve una respuesta Ok con la colección de animales correspondiente a la página solicitada.
+    
+-   `AnimalController_CreateAnimal_ReturnOk()`: Aquí se valida la creación de un animal a través del método `CreateAnimal()` del controlador. Se verifica si se devuelve una respuesta Ok tras la creación exitosa del animal.
+    
+
+Estas pruebas están diseñadas para garantizar el correcto funcionamiento y la validez de las operaciones en el controlador de `Animal` antes de su implementación en un entorno de producción.
+
 ## Principios *SOLID* en este proyecto
 
 Este proyecto sigue los principios SOLID para promover una arquitectura robusta y mantenible. A continuación, se muestra cómo se aplican estos principios:
@@ -199,6 +210,8 @@ Ruta: `DELETE /api/razas/{idRaza}`
 
 *Demo de la petición:*
 ![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/5f496911-8557-4b37-98c6-6a95988f3c63)
+
+---
 
 
 
