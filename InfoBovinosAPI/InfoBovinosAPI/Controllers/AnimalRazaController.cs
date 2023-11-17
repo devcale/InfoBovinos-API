@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InfoBovinosAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/conteo-animal/activos-por-raza")]
     [ApiController]
     public class AnimalRazaController : Controller
     {

@@ -45,6 +45,11 @@ namespace InfoBovinosAPI.Repository
             return _context.Animales.Any(a => a.Id == id);
         }
 
+        public bool AnimalExists(string nombre)
+        {
+            return _context.Animales.Any(a => a.Nombre == nombre);
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();

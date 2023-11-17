@@ -10,6 +10,7 @@ namespace InfoBovinosAPI.Interfaces
         bool UpdateRaza(Raza raza);
         bool DeleteRaza(Raza raza);
         bool RazaExists(int id);
+        bool RazaExists(string nombre);
         bool Save();
     }
 }

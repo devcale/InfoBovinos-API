@@ -10,6 +10,7 @@ namespace InfoBovinosAPI.Interfaces
         bool UpdateAnimal(Animal animal);
         bool DeleteAnimal(Animal animal);
         bool AnimalExists(int id);
+        bool AnimalExists(string nombre);
         bool Save();
 
     }

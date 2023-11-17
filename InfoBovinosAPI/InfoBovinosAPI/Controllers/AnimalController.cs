@@ -1,22 +1,26 @@
-﻿using InfoBovinosAPI.DTOs;
+﻿using FluentValidation;
+using InfoBovinosAPI.DTOs;
 using InfoBovinosAPI.Interfaces;
 using InfoBovinosAPI.Mappers;
 using InfoBovinosAPI.Models;
+using InfoBovinosAPI.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoBovinosAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/animal")]
     [ApiController]
     public class AnimalController : Controller
     {
         private readonly IAnimalRepository _animalRepository;
         private readonly AnimalMapper _mapper;
+        private readonly IValidator<AnimalDTO> _animalValidator;
 
-        public AnimalController(IAnimalRepository animalRepository, AnimalMapper mapper)
+        public AnimalController(IAnimalRepository animalRepository, AnimalMapper mapper, IValidator<AnimalDTO> animalValidator)
         {
             _animalRepository = animalRepository;
             _mapper = mapper;
+            _animalValidator = animalValidator;
         }
 
 
@@ -48,12 +52,12 @@ namespace InfoBovinosAPI.Controllers
                 return NotFound();
             }
 
-            AnimalDTO animal = _mapper.AnimalToDTO(_animalRepository.GetAnimal(animalId));
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            AnimalDTO animal = _mapper.AnimalToDTO(_animalRepository.GetAnimal(animalId));
 
             return Ok(animal);
         }
@@ -63,63 +67,49 @@ namespace InfoBovinosAPI.Controllers
         [ProducesResponseType(400)]
         public IActionResult CreateAnimal([FromBody] AnimalDTO animalCreate)
         {
-            if (animalCreate == null)
-                return BadRequest(ModelState);
-
-            var animal = _animalRepository.GetAnimales()
-                .Where(a => a.Nombre.Trim().ToUpper() == animalCreate.Nombre.TrimEnd().ToUpper())
-                .FirstOrDefault();
-
-            if (animal != null)
+            var validationResult = _animalValidator.Validate(animalCreate);
+            if (!validationResult.IsValid)
             {
-                ModelState.AddModelError("", "Ya existe un animal con ese nombre. El id es " + animal.Id);
-                return StatusCode(422, ModelState);
+                return BadRequest(validationResult.Errors);
             }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var animal = _mapper.DTOToAnimal(animalCreate);
+            bool success = _animalRepository.CreateAnimal(animal);
 
-            var animalDTO = _mapper.DTOToAnimal(animalCreate);
-
-            if (!_animalRepository.CreateAnimal(animalDTO))
+            if (!success)
             {
-                ModelState.AddModelError("", "Algo ha salido mal al intentar crear el animal.");
+                ModelState.AddModelError("", "Ha ocurrido un error al intentar crear el animal.");
                 return StatusCode(500, ModelState);
             }
-            return Ok("Se ha creado el animal correctamente");
 
+            return Ok("Se ha creado el animal correctamente");
         }
 
         [HttpPut("{animalId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateAnimal(int animalId, [FromBody] AnimalDTO updatedAnimal)
+        public IActionResult UpdateAnimal(int animalId, [FromBody] AnimalDTO animalUpdate)
         {
-            if (updatedAnimal == null)
-                return BadRequest(ModelState);
-
-            if (animalId != updatedAnimal.Id)
-                return BadRequest(ModelState);
-
-            if (!_animalRepository.AnimalExists(animalId))
-                return NotFound();
-
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            Animal animal = _mapper.DTOToAnimal(updatedAnimal);
-
-            if (!_animalRepository.UpdateAnimal(animal))
+            var validationResult = _animalValidator.Validate(animalUpdate);
+            if (!validationResult.IsValid)
             {
-                ModelState.AddModelError("", "Algo ha salido mal al intentar actualizar la raza");
+                return BadRequest(validationResult.Errors);
+            }
+
+            if (animalId != animalUpdate.Id)
+                return BadRequest(ModelState);
+
+            Animal animal = _mapper.DTOToAnimal(animalUpdate);
+            bool success = _animalRepository.UpdateAnimal(animal);
+
+            if (!success)
+            {
+                ModelState.AddModelError("", "Ha ocurrido un error al intentar actualizar el animal.");
                 return StatusCode(500, ModelState);
             }
 
             return NoContent();
-
         }
 
         [HttpDelete("{animalId}")]

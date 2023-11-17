@@ -21,7 +21,6 @@ namespace InfoBovinosAPI.Repository
         public Raza GetRaza(int id)
         {
             return _context.Razas.Where(r => r.RazaId == id).FirstOrDefault();
-            
         }
 
         public ICollection<Raza> GetRazas()
@@ -44,6 +43,11 @@ namespace InfoBovinosAPI.Repository
         public bool RazaExists(int id)
         {
             return _context.Razas.Any(a => a.RazaId == id);
+        }
+
+        public bool RazaExists(string nombre)
+        {
+            return _context.Razas.Any(r => r.Nombre == nombre);
         }
 
         public bool Save()

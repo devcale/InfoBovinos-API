@@ -23,10 +23,10 @@ namespace InfoBovinosAPI.Repository
                     activeAnimals, 
                     r => r.RazaId, 
                     a => a.RazaId, 
-                    (r, a) => new { breed = r.Nombre, aId = a.Id }
+                    (r, a) => new { raza = r.Nombre }
                 )
                 .ToList()
-                .GroupBy(a => a.breed)
+                .GroupBy(a => a.raza)
                 .ToDictionary(
                     group => group.Key,
                     group => group.Count()
