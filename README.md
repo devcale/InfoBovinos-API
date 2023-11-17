@@ -98,9 +98,11 @@ Luego de haber creado la migración inicial, ejecuta el siguiente comando para a
 
 ### Pasos para poblar la Base de Datos con el script SQL incluido
 1. En la terminal o en la consola de comandos, accede al directorio `/Data`, en donde se encuentra el archivo
- `POBLAR DB.sql`.
- 2. Ejecuta el script SQL en tu herramienta de gestión de bases de datos SQLite o a través de la línea de comandos SQLite:
-  `sqlite3 bovinosdb.db < script.sql`
+ `POBLARDB.sql`.
+ 2. Ejecuta el script SQL en tu herramienta de gestión de bases de datos SQLite. En mi caso he usado la extension SQLite/SQL Server Compact Toolbox.
+![imagen](https://github.com/devcale/InfoBovinos-API/assets/65783607/e869af13-667e-44c1-b933-141fe1ad87bf)
+
+  
 	 
 ## Uso del API
 
