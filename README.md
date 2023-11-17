@@ -22,3 +22,46 @@ Este proyecto consiste en el desarrollo de una API REST que gestiona la informac
 - **Fluent API:** El uso de Fluent API permite definir reglas específicas, restricciones y relaciones entre entidades de manera programática, otorgando un mayor control sobre la estructura de la base de datos.
 -   **FluentValidation:** Se eligió FluentValidation para la validación de datos en la API debido a que proporciona una forma declarativa y altamente legible de definir reglas de validación para los modelos de datos, permitiendo una validación robusta y personalizable en la capa de presentación sin acoplarla al modelo subyacente.
 - **Swagger:** Implementación de Swagger para la documentación interactiva y la visualización de la API, facilitando su comprensión y uso por parte de los desarrolladores.
+
+## Instrucciones de Instalación
+
+### Requisitos Previos
+
+-   **IDE:** Tener instalado un IDE compatible con ASP.NET 6. Recomiendo utilizar [Visual Studio 2022](https://visualstudio.microsoft.com/es/free-developer-offers/).
+-   **.NET SDK:** Asegurarse de tener instalado el SDK de .NET 6 o superior.
+
+### Pasos para la Instalación del API
+
+1.  **Clonar el Repositorio:**   
+	 `git clone https://github.com/devcale/InfoBovinos-API.git` 
+    
+2.  **Acceder al Directorio del Proyecto Mediante Tu IDE:**
+	Abre tu IDE de elección y accede al directorio del proyecto que acabas de clonar.
+    
+3.   **Instalar Dependencias:**
+Utilizando una terminal, navega al directorio del proyecto que contiene el archivo `.csproj` y ejecuta el comando:     
+`dotnet restore`
+
+### Pasos para configurar la Base de Datos SQLite
+1. **Creación de la Migración Inicial:**
+En la terminal o en la consola de comandos, navega hasta el directorio raíz del proyecto donde se encuentra el archivo `.csproj` del proyecto.
+    
+	Ejecuta el siguiente comando para crear la migración inicial:   
+
+	`dotnet ef migrations add InitialCreate` 
+
+	Esto generará una migración inicial basada en el modelo de datos actual.
+
+2. **Aplicación de las Migraciones:**
+Luego de haber creado la migración inicial, ejecuta el siguiente comando para aplicarla y crear la estructura de la base de datos:
+ 
+	`dotnet ef database update` 
+
+	Esto aplicará todas las migraciones pendientes y creará la base de datos SQLite.
+
+### Pasos para poblar la Base de Datos con el script SQL incluido
+1. En la terminal o en la consola de comandos, accede al directorio `/Data`, en donde se encuentra el archivo
+ `POBLAR DB.sql`.
+ 2. Ejecuta el script SQL en tu herramienta de gestión de bases de datos SQLite o a través de la línea de comandos SQLite:
+  `sqlite3 bovinosdb.db < script.sql`
+	 
