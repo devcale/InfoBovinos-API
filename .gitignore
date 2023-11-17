@@ -484,3 +484,6 @@ $RECYCLE.BIN/
 # Ignore SQLite temporary files
 *.db-shm
 *.db-wal
+
+# Entity Framework Core Migrations
+**/Migrations/
